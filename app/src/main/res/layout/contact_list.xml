@@ -2,29 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_marginTop="2sp"
-  android:layout_marginBottom="2sp"
-  android:orientation="horizontal">
+  android:layout_marginTop="4dp"
+  android:layout_marginBottom="4dp"
+  android:background="#EEEEEE"
+  android:orientation="horizontal"
+  android:padding="8dp">
 
-  <TextView
-    android:id="@+id/txt_name"
-    android:layout_width="match_parent"
+  <ImageView
+    android:id="@+id/img_article"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_marginEnd="8dp"
+    android:scaleType="centerCrop"
+    android:background="#CCCCCC"/>
+
+  <LinearLayout
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:background="#5AFFC107"
-    android:paddingLeft="5sp"
-    android:paddingTop="2sp"
-    android:paddingBottom="2sp"
-    android:textSize="18sp" />
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/txt_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="#000000"
+      android:textSize="18sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/txt_phone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="#666666"
+      android:maxLines="2"
+      android:ellipsize="end"
+      android:textSize="14sp" />
+  </LinearLayout>
 
   <TextView
-    android:id="@+id/txt_phone"
-    android:layout_width="match_parent"
+    android:id="@+id/txt_viewcount"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:background="#2F03A9F4"
-    android:paddingLeft="5sp"
-    android:paddingTop="2sp"
-    android:paddingBottom="2sp"
-    android:textSize="18sp" />
+    android:layout_marginStart="8dp"
+    android:layout_gravity="center_vertical"
+    android:text="0 views"
+    android:textColor="#FF5722"
+    android:textSize="14sp"
+    android:textStyle="bold" />
+
 </LinearLayout>
