@@ -42,29 +42,29 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void loadArticleData(String id) {
-        db.collection("articles").document(id).get()
-          .addOnSuccessListener(documentSnapshot -> {
-              if (documentSnapshot.exists()) {
-                  Article article = documentSnapshot.toObject(Article.class);
-                  if (article != null) {
-                      tvTitleDetail.setText(article.getTitle());
-                      tvDescDetail.setText(article.getDescription());
-                      
-                      // Do document get về không tự động map ID (vì mình dùng @Exclude) 
-                      // nhưng ta chỉ cần hiển thị nên không sao
-                      
-                      // Ở Firestore, viewcount vừa được tăng lên 1
-                      // Nhưng nếu toObject() bị chậm, ta đọc thẳng từ document
-                      Long viewcount = documentSnapshot.getLong("viewcount");
-                      tvViewCountDetail.setText((viewcount != null ? viewcount : 0) + " views");
+        // Thay vì dùng .get() (chỉ lấy 1 lần), ta dùng addSnapshotListener để lắng nghe realtime
+        db.collection("articles").document(id).addSnapshotListener((documentSnapshot, error) -> {
+            if (error != null) {
+                Toast.makeText(DetailActivity.this, "Không thể tải bài viết: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                      Glide.with(this)
-                           .load(article.getImg())
-                           .centerCrop()
-                           .into(imgDetail);
-                  }
-              }
-          })
-          .addOnFailureListener(e -> Toast.makeText(DetailActivity.this, "Không thể tải bài viết", Toast.LENGTH_SHORT).show());
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                Article article = documentSnapshot.toObject(Article.class);
+                if (article != null) {
+                    tvTitleDetail.setText(article.getTitle());
+                    tvDescDetail.setText(article.getDescription());
+
+                    Long viewcount = documentSnapshot.getLong("viewcount");
+                    tvViewCountDetail.setText((viewcount != null ? viewcount : 0) + " views");
+
+                    // Tránh load lại ảnh liên tục nếu URL không đổi, nhưng để đơn giản ta cứ load
+                    Glide.with(this)
+                         .load(article.getImg())
+                         .centerCrop()
+                         .into(imgDetail);
+                }
+            }
+        });
     }
 }

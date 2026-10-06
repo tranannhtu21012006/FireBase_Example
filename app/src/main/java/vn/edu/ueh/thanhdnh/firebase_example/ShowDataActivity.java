@@ -15,6 +15,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -46,7 +47,9 @@ public class ShowDataActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
-      db.collection("articles").addSnapshotListener(new EventListener<QuerySnapshot>() {
+      db.collection("articles")
+        .orderBy("timestamp", Query.Direction.DESCENDING) // Sắp xếp giảm dần theo thời gian
+        .addSnapshotListener(new EventListener<QuerySnapshot>() {
         @Override
         public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
           if (snapshots != null) {
@@ -57,8 +60,9 @@ public class ShowDataActivity extends AppCompatActivity {
               String desc = data.get("description") != null ? (String) data.get("description") : "";
               String img = data.get("img") != null ? (String) data.get("img") : "";
               int viewcount = data.get("viewcount") != null ? ((Long) data.get("viewcount")).intValue() : 0;
+              long timestamp = data.get("timestamp") != null ? ((Long) data.get("timestamp")) : 0;
               
-              Article article = new Article(title, desc, img, viewcount);
+              Article article = new Article(title, desc, img, viewcount, timestamp);
               article.setId(q.getId()); // Lưu ID để biết bài nào mà click
               articles.add(article);
             }

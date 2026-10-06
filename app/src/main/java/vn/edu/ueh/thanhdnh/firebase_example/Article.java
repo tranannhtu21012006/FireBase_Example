@@ -9,15 +9,17 @@ public class Article {
   private String description;
   private String img;
   private int viewcount;
+  private long timestamp; // Thêm trường thời gian
 
   // Constructor rỗng cần thiết cho Firebase Firestore
   public Article() {}
 
-  public Article(String title, String description, String img, int viewcount) {
+  public Article(String title, String description, String img, int viewcount, long timestamp) {
     this.title = title;
     this.description = description;
     this.img = img;
     this.viewcount = viewcount;
+    this.timestamp = timestamp;
   }
 
   @Exclude
@@ -60,5 +62,13 @@ public class Article {
 
   public void setViewcount(int viewcount) {
     this.viewcount = viewcount;
+  }
+
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(long timestamp) {
+    this.timestamp = timestamp;
   }
 }

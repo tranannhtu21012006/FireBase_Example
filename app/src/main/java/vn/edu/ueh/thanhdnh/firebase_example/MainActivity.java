@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       String title = etTitle.getText().toString();
       String desc = etDescription.getText().toString();
       String img = etImgUrl.getText().toString();
+      long timestamp = System.currentTimeMillis(); // Lấy thời gian hiện tại lúc tạo bài
 
-      Article article = new Article(title, desc, img, 0);
+      Article article = new Article(title, desc, img, 0, timestamp);
 
       db.collection("articles").add(article)
               .addOnSuccessListener(documentReference -> {
