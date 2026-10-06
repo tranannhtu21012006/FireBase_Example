@@ -25,7 +25,7 @@
       android:paddingLeft="5sp"
       android:paddingTop="5sp"
       android:paddingBottom="5sp"
-      android:text="Title"
+      android:text="Image"
       android:textColor="#FFFFFF"
       android:textSize="18sp"
       android:textStyle="bold" />
